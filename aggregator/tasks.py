@@ -7,16 +7,16 @@ from .validators import validate_format, validator_factory
 @celery_app.task
 def process_event(payload):
     if not payload:
-        return
+        return False
 
     if not validate_format(payload):
-        return
+        return False
 
     category = payload['category']
     name = payload['name']
     key = ' '.join([category, name])
     if not validator_factory.validate(key=key, data=payload['data']):
-        return
+        return False
 
     try:
         event = Event(session_id=payload['session_id'],

@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 
 from .tasks import process_event
 # Create your views here.
@@ -10,7 +10,7 @@ from .tasks import process_event
 @csrf_exempt
 def aggregate(request):
     if request.method == 'POST':
-        process_event.delay(request.POST)
+        process_event.delay(json.loads(request.body.decode('utf-8')))
 
         return JsonResponse({'message': 'accepted'})
 
