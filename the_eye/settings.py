@@ -32,7 +32,8 @@ DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['*']).split(',')
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['*']).split(',')
+ALLOWED_HOSTS = ['*', ]
 
 # Application definition
 
@@ -127,3 +128,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = os.getenv('BROKER_URL', 'redis://localhost:6379')
